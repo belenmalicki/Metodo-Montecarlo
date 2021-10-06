@@ -1,0 +1,129 @@
+
+  // const [open, setOpen] = React.useState(false);
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
+
+{/* <button variant="outlined" color="secondary" onClick={handleClickOpen} className={classes.button2}>
+            glosario
+          </button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Glosario"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <p>
+                Lista de sintaxis de las operaciones matemáticas a utilizar:
+              </p>
+              <div container>
+                <div style={{
+                  paddingLeft: 20,
+                  marginTop: 20,
+                  marginBottom: 15,
+                  marginLeft: 50,
+                  marginRight: 50,
+                }}>
+                  <p>
+                    • Suma: +
+                  </p>
+                  <p>
+                  • Resta: -
+                  </p>
+                  <p>
+                  • Multiplicación: *
+                  </p>
+                  <p>
+                  • División: /
+                  </p>
+                  <p>
+                  • Raíz cuadrada: sqrt()
+                  </p>
+                  <p>
+                  • Raíz cúbica: cbrt()
+                  </p>
+                  <p>
+                  • Potencia: ^
+                  </p>
+                  <p>
+                  • Seno: sin()
+                  </p>
+                  <p>
+                  • Arco seno: asin()
+                  </p>
+                  <p>
+                  • Coseno: cos()
+                  </p>
+                  
+                </div>
+                <div style={{
+                  paddingLeft: 20,
+                  marginTop: 20,
+                }}>
+                  <p>
+                  • Arco coseno: acos()
+                  </p>
+                  <p>
+                  • Tangente: tan()
+                  </p>
+                  <p>
+                  • Arco tangente: atan()
+                  </p>
+                  <p>
+                  • Cotangente: cot()
+                  </p>
+                  <p>
+                  • Arco cotangente: acot()
+                  </p>
+                  <p>
+                  • Secante: sec()
+                  </p>
+                  <p>
+                  • Arco secante: asec()
+                  </p>
+                  <p>
+                  • Cosecante: csc()
+                  </p>
+                  <p>
+                  • Arco cosecante: acsc()
+                  </p>
+                  <p>
+                  • Función exponencial: e^ 
+                  </p>
+                    
+                </div>
+                <p style={{
+                  marginLeft: 50,
+                  marginRight: 30,
+                  marginBottom: 15,
+                }}>
+                  • Funciones seno, coseno, tangente, cotangente, secante y cosecante hiperbólicas:
+                  se escriben igual que las definiciones originales, con una "h" antes de abrir los
+                  paréntesis.
+                  </p>
+                  <p style={{
+                  marginLeft: 50,
+                  marginRight: 30,
+                }}>
+                  • Funciones arco seno, coseno, tangente, cotangente, secante y cosecante
+                  hiperbólicas: se escriben igual que las definiciones originales, con una "a" al
+                  principio.
+                  </p>
+              </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <button onClick={handleClose} className={classes.aceptar} autoFocus>
+                Aceptar
+              </button>
+            </DialogActions>
+          </Dialog> */}
