@@ -11,24 +11,14 @@ import {
   FlexibleXYPlot,
 } from "react-vis";
 import * as math from "mathjs";
-// import TextField from "@material-ui/core/TextField";
-// import Grid from "@material-ui/core/Grid";
-// import button from "@material-ui/core/button";
-// import { makeStyles } from "@material-ui/core/styles";
-// import p from "@material-ui/core/p";
-// import { orange } from "@material-ui/core/colors";
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import Box from '@material-ui/core/Box';
+import FunctionsModal from "./FunctionsModal";
 
 export default function App() {
-  const [funcion, setFuncion] = useState("3x^2");
+  const [funcion, setFuncion] = useState("e^x");
   const [a, setA] = useState(-5);
   const [b, setB] = useState(5);
   const [n, setN] = useState(500);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const funcionMontecarlo = (funcion, a, b, n) => {
     var arrayPuntos = [];
     const parser = math.parser();
@@ -75,12 +65,6 @@ export default function App() {
       }
       puntosDisparados++;
     }
-    // console.log("Aciertos: " + puntosAcertados);
-    // console.log("Disparos: " + puntosDisparados);
-    // console.log("b: " + b);
-    // console.log("a: " + a);
-    // console.log("Maximo: " + alturaMaximaRectangulo);
-    // console.log("Minimo: " + alturaMinimaRectangulo);
 
     var integral =
       (puntosAcertados / puntosDisparados) *
@@ -110,9 +94,12 @@ export default function App() {
     setB(parseFloat(document.getElementById("tf-b").value));
     setN(parseFloat(document.getElementById("tf-n").value));
   };
+  function openModal() {
+    setIsOpen(true);
+  }
 
   return (
-    <div  style={{ width: window.innerWidth, height: window.innerHeight, backgroundColor: "#B0F2BE"}}>
+    <div style={{ width: window.innerWidth, height: window.innerHeight, backgroundColor: "#B0F2BE" }}>
       <p
         style={{
           fontSize: 25,
@@ -120,14 +107,14 @@ export default function App() {
           padding: 20,
           color: '#fff',
           fontFamily: 'Montserrat',
-          fontWeight:'bold',
-          margin:0
+          fontWeight: 'bold',
+          margin: 0
         }}
         align="center"
       >
         MONTECARLO
       </p>
-      <div container style={{ backgroundColor: "#B0F2BE", display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop:20 }}>
+      <div container style={{ backgroundColor: "#B0F2BE", display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
         <div className={classes.paper}
           style={{
             marginBottom: 25,
@@ -136,7 +123,7 @@ export default function App() {
           item xs={8}>
           <FlexibleXYPlot
             width={800}
-            height={500}
+            height={480}
             style={{
               backgroundColor: "#FFFFFF",
               position: "center",
@@ -170,18 +157,20 @@ export default function App() {
         <div>
           <div style={{ backgroundColor: "#fff", borderRadius: 10, height: 380, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '5%', marginLeft: '5%' }}>
             {/*glosario */}
-            <label style={{ fontFamily: 'Montserrat'}}>
-              Ingrese la función a graficar:
+            <label style={{ fontFamily: 'Montserrat' }}>
+              Ingrese la función a graficar
+              <button style={classes.question} onClick={openModal}> ?</button> :
+              <FunctionsModal setIsOpen={setIsOpen} modalIsOpen={modalIsOpen} />
               <input
                 id="tf-funcion"
                 style={classes.textField}
                 //style={{ width: 350,display:'flex',flexDirection:'column', alignItems:'center' }}
                 required
-                defaultValue="3x^2"
+                defaultValue="e^x"
               />
             </label>
             <br />
-            <label style={{ fontFamily: 'Montserrat'}}>
+            <label style={{ fontFamily: 'Montserrat' }}>
               Ingrese el valor de a:
               <input
                 id="tf-a"
@@ -192,7 +181,7 @@ export default function App() {
               />
             </label>
             <br />
-            <label style={{ fontFamily: 'Montserrat'}}>
+            <label style={{ fontFamily: 'Montserrat' }}>
               Ingrese el valor de b:
               <input
                 id="tf-b"
@@ -203,7 +192,7 @@ export default function App() {
               />
             </label>
             <br />
-            <label style={{ fontFamily: 'Montserrat'}}>
+            <label style={{ fontFamily: 'Montserrat' }}>
               Ingrese el valor de N:
               <input
                 id="tf-n"
@@ -223,8 +212,8 @@ export default function App() {
           </div>
           <div style={{ backgroundColor: '#fff', borderRadius: 10, height: 80, width: 400, display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '5%', marginTop: '5%' }}>
             {localStorage.getItem("resultado") !== null && (
-              <p className={classes.textFieldResultado} style={{ fontFamily: 'Montserrat'}} align="center">
-                El resultado de Montecarlo es: <p style={{ fontFamily: 'Montserrat', fontWeight:'bold'}} >{localStorage.getItem("resultado")}</p>
+              <p className={classes.textFieldResultado} style={{ fontFamily: 'Montserrat' }} align="center">
+                El resultado es: <p style={{ fontFamily: 'Montserrat', fontWeight: 'bold' }} >{localStorage.getItem("resultado")}</p>
               </p>
             )}
           </div>
@@ -235,14 +224,6 @@ export default function App() {
 }
 
 const classes = ({
-  // paper: {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   alignItems: "center",
-  //   boxShadow: "none",
-  //   backgroundColor: "transparent",
-  // },
-
   textField: {
     display: 'flex',
     flexDirection: 'column',
@@ -251,29 +232,36 @@ const classes = ({
     borderRadius: 5,
     borderWidth: 0.5,
     height: 20,
-    marginTop:10,
+    marginTop: 10,
     fontFamily: 'Montserrat'
 
   },
-
   textFieldResultado: {
     width: 250,
     marginTop: 50,
     fontSize: 18,
     color: 'red',
   },
-
   button: {
     marginTop: 10,
     color: "#FFF",
     backgroundColor: "#E562C9",
-    width:150,
-    height:40,
-    borderRadius:5,
-    borderColor:"#E562C9",
-    fontSize:18,
+    width: 150,
+    height: 40,
+    borderRadius: 5,
+    borderColor: "#E562C9",
+    fontSize: 18,
     fontFamily: 'Montserrat'
-    //fontWeight: 'bold'
   },
+  question: {
+    color: "#FFF",
+    backgroundColor: "#E562C9",
+    width: 22,
+    height: 22,
+    borderRadius: 20,
+    borderColor: "#E562C9",
+    fontSize: 12,
+    fontFamily: 'Montserrat'
+  }
 });
 

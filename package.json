@@ -10,6 +10,7 @@
     "mathjs-simple-integral": "^0.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-modal": "^3.14.3",
     "react-scripts": "4.0.3",
     "react-vis": "^1.11.7",
     "web-vitals": "^1.1.2"
