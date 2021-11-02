@@ -19,6 +19,8 @@ export default function App() {
   const [b, setB] = useState(5);
   const [n, setN] = useState(500);
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [carga, setCarga] = useState(new Date());
+
   const funcionMontecarlo = (funcion, a, b, n) => {
     var arrayPuntos = [];
     const parser = math.parser();
@@ -27,30 +29,30 @@ export default function App() {
     var yRandom = 0;
     var yReal = 0;
     var puntosDisparados = 0;
-    var puntosAcertados = 0;
+    var puntosPositivos = 0;
+    var puntosNegativos = 0;
     var h = (b - a) / n;
-    var maximo = parser.evaluate("f(" + a + ")");
-    var minimo = parser.evaluate("f(" + a + ")");
+    var maximo = math.max(parser.evaluate("f(" + a + ")"), 0);
+    var minimo = math.min(parser.evaluate("f(" + a + ")"), 0);
     for (var i = a + h; i <= b; i = i + h) {
       var aux = parser.evaluate("f(" + i + ")");
       if (maximo < aux) {
-        maximo = aux;
+        maximo = math.max(aux, 0);
       }
       if (aux < minimo) {
-        minimo = aux;
+        minimo = math.min(aux, 0);
       }
     }
-    var alturaMaximaRectangulo = maximo;
-    var alturaMinimaRectangulo = minimo;
+
+    const maxValue = maximo;
+    const minValue = minimo;
     while (puntosDisparados < n) {
-      xRandom = Math.random() * (b - a) + a;
-      yRandom =
-        Math.random() * (alturaMaximaRectangulo - alturaMinimaRectangulo) +
-        alturaMinimaRectangulo;
+      xRandom = math.random(a, b);
+      yRandom = math.random(minValue, maxValue);
       yReal = parser.evaluate("f(" + xRandom + ")");
       if (yRandom >= 0) {
         if (yReal >= yRandom) {
-          puntosAcertados++;
+          puntosPositivos++;
           arrayPuntos.push({ x: xRandom, y: yRandom, color: "#4eb764", size: 1 });
         } else {
           arrayPuntos.push({ x: xRandom, y: yRandom, color: "#E562C9", size: 1 });
@@ -59,19 +61,19 @@ export default function App() {
         if (yReal > yRandom) {
           arrayPuntos.push({ x: xRandom, y: yRandom, color: "#E562C9", size: 1 });
         } else {
-          puntosAcertados--;
-          arrayPuntos.push({ x: xRandom, y: yRandom, color: "#4eb764", size: 1 });
+          puntosNegativos++;
+          arrayPuntos.push({ x: xRandom, y: yRandom, color: "#eb7734", size: 1 });
         }
       }
       puntosDisparados++;
     }
 
-    var integral =
-      (puntosAcertados / puntosDisparados) *
+    const resultado = 
+      ((puntosPositivos - puntosNegativos) / puntosDisparados) *
       (b - a) *
-      (alturaMaximaRectangulo - alturaMinimaRectangulo);
-    console.log(integral);
-    localStorage.setItem("resultado", integral);
+      (maxValue - minValue);
+    console.log(resultado);
+    localStorage.setItem("resultado", resultado);
     return [arrayPuntos];
   };
   const graficarFuncion = (funcion, a, b) => {
@@ -93,6 +95,7 @@ export default function App() {
     setA(parseFloat(document.getElementById("tf-a").value));
     setB(parseFloat(document.getElementById("tf-b").value));
     setN(parseFloat(document.getElementById("tf-n").value));
+    setCarga(new Date());
   };
   function openModal() {
     setIsOpen(true);
@@ -135,6 +138,16 @@ export default function App() {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
+            <LineSeries
+              style={{
+                strokeWidth: "1px",
+                color: "black",
+              }}
+              opacity={0.4}
+              lineStyle={{ stroke: "black" }}
+              data={graficarFuncion('0', a, b)}
+              size={2}
+            />
             <LineSeries
               className="linemark-series-example"
               style={{
